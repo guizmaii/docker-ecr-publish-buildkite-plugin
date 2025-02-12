@@ -13,6 +13,8 @@ configuration:
       type: string
     branch-args:
       type: [array, string]
+    build-tag:
+      type: string
     branch-tags:
       type: [array, string]
     cache-from:

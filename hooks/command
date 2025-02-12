@@ -219,7 +219,8 @@ target="${BUILDKITE_PLUGIN_DOCKER_ECR_PUBLISH_TARGET:-}"
 enable_buildkit=0
 build_args=()
 caches_from=()
-tags=("${BUILDKITE_BUILD_NUMBER}")
+build_tag="${BUILDKITE_PLUGIN_DOCKER_ECR_PUBLISH_BUILD_TAG:-$BUILDKITE_BUILD_NUMBER}"
+tags=("$build_tag")
 local_tag="${BUILDKITE_PLUGIN_DOCKER_ECR_PUBLISH_ECR_NAME}:${BUILDKITE_BUILD_NUMBER}"
 
 regions=()
@@ -272,7 +273,7 @@ DOCKER_BUILDKIT=${enable_buildkit} \
   ${BUILDKITE_PLUGIN_DOCKER_ECR_PUBLISH_ADDITIONAL_BUILD_ARGS:-} \
   ${build_args[@]+"${build_args[@]}"} \
   ${caches_from[@]+"${caches_from[@]}"} \
-  ${target_arg} \
+  "${target_arg}" \
   "${build_context}"
 
 save_digest_as_metadata="${BUILDKITE_PLUGIN_DOCKER_ECR_PUBLISH_SAVE_DIGEST_AS_METADATA:-}"
